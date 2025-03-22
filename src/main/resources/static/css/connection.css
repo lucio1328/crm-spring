@@ -1,0 +1,132 @@
+/* Styles globaux */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(120deg, #0f172a, #1e293b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Conteneur du formulaire */
+.login-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre */
+h3 {
+    margin-bottom: 20px;
+    color: #1e40af;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Message d'erreur */
+.error-message {
+    color: #d32f2f;
+    background: #ffebee;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Conteneur des champs de formulaire */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Labels */
+label {
+    align-self: flex-start;
+    font-weight: 600;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Champs de formulaire */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+    background: #f8f9fa;
+}
+
+/* Effet focus sur les champs */
+input:focus {
+    border-color: #1e40af;
+    outline: none;
+    box-shadow: 0 0 8px rgba(30, 64, 175, 0.4);
+}
+
+/* Bouton de connexion */
+.btn-login {
+    width: 100%;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border: none;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Lien oublié mot de passe */
+.forgot-password {
+    display: block;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #1e40af;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: #3b82f6;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 2rem;
+    }
+}
