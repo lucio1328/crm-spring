@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Projets</title>
+    <link rel="stylesheet" th:href="@{/css/details.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+</head>
+<body>
+
+<a href="/dashboard" class="btn">⬅ Retour au Dashboard</a>
+<br/><br/>
+<h2 class="entete">Liste des Projets</h2>
+
+<!--<label for="statusFilter">Filtrer par statut :</label>-->
+<!--<select id="statusFilter">-->
+<!--    <option value="">Tous</option>-->
+<!--    <option th:each="status : ${statuses}" th:value="${status.getTitle()}" th:text="${status.getTitle()}"></option>-->
+<!--</select>-->
+
+<table id="projectsTable">
+    <thead>
+    <tr>
+        <th>Titre</th>
+        <th>Client</th>
+        <th>Date limite</th>
+        <th>Créé le</th>
+        <th>Assigné à</th>
+        <th>Statut</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projets}">
+        <td th:text="${project.getTitle()}"></td>
+        <td th:text="${project.getClientName()}"></td>
+        <td th:text="${#temporals.format(project.getDeadline(), 'dd/MM/yyyy')}"></td>
+        <td th:text="${#temporals.format(project.getCreatedAt(), 'dd/MM/yyyy')}"></td>
+        <td th:text="${project.getAssigneeName()}"></td>
+        <td>
+            <span th:text="${project.getStatus().getTitle()}"
+                  th:style="'background-color:' + ${project.getStatus().getColor()} + ';
+                  padding: 5px; color: white; border-radius: 5px; display: inline-block;'">
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        let table = $("#projectsTable").DataTable({
+            "paging": true,
+            "searching": true,
+            "info": true,
+            "lengthChange": false,
+            "pageLength": 10
+        });
+
+        $("#statusFilter").on("change", function () {
+            let status = $(this).val();
+            table.column(5).search(status).draw();
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,10 +1,7 @@
 package com.lucio.crmspring.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
-@Getter
-@Setter
 public class StatistiqueResponse {
     private int clients = 0;
     private int projets = 0;
@@ -12,6 +9,7 @@ public class StatistiqueResponse {
     private int offres = 0;
     private int factures = 0;
     private int paiements = 0;
+    private List<RevenuMensuel> revenus_mensuels;
 
     public int getClients() {
         return clients;
@@ -59,5 +57,13 @@ public class StatistiqueResponse {
 
     public void setPaiements(int paiements) {
         this.paiements = paiements;
+    }
+
+    public List<RevenuMensuel> getRevenusMensuels() {
+        return revenus_mensuels;
+    }
+
+    public void setRevenusMensuels(List<RevenuMensuel> revenusMensuels) {
+        this.revenus_mensuels = revenusMensuels;
     }
 }

@@ -1,0 +1,99 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f5f7;
+    margin: 20px;
+    padding: 0;
+}
+
+/* Bouton Retour */
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background-color: #4a90e2;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #357ABD;
+}
+
+/* Titre */
+.entete {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* En-tête du tableau */
+thead {
+    background-color: #e9ecef;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Cellules */
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Ligne survolée */
+tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Lien des entreprises */
+td:first-child a {
+    color: #4a90e2;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+td:first-child a:hover {
+    text-decoration: underline;
+}
+
+/* Pagination DataTables */
+.dataTables_wrapper {
+    margin-top: 15px;
+}
+
+.dataTables_paginate {
+    text-align: center;
+}
+
+.dataTables_paginate a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+.dataTables_paginate .current {
+    background-color: #4a90e2;
+    color: white;
+}
+
+/* Barre de recherche */
+.dataTables_filter input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

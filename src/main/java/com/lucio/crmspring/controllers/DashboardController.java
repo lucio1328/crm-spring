@@ -21,8 +21,6 @@ public class DashboardController {
     public Mono<ModelAndView> getDashboard(HttpSession session, Model model) {
         String token = (String) session.getAttribute("token");
 
-        System.out.println("🛠️ Token en session: " + token);
-
         if (token == null) {
             return Mono.just(new ModelAndView("redirect:/"));
         }
