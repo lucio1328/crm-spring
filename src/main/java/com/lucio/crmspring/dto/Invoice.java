@@ -1,89 +1,79 @@
 package com.lucio.crmspring.dto;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Map;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Invoice {
-    private Long id;
-    private String externalId;
-    private Double amount;
-    private String description;
-    private String paymentSource;
-    private LocalDateTime paymentDate;
-    private Long integrationPaymentId;
-    private String integrationType;
-    private Long invoiceId;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Long getId() {
-        return id;
-    }
+    @JsonProperty("client")
+    private Client client;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @JsonProperty("contact_info")
+    private ContactInfo contactInfo;
 
-    public String getExternalId() {
-        return externalId;
-    }
+    @JsonProperty("created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate createdAt;
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
-    }
+    @JsonProperty("sent_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private String sentAt;
 
-    public Double getAmount() {
-        return amount;
-    }
+    @JsonProperty("due_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private String dueAt;
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+    @JsonProperty("amount_due")
+    private String amountDue;
 
-    public String getDescription() {
-        return description;
-    }
+    @JsonProperty("status")
+    private String status;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @JsonProperty("invoice_number")
+    private String invoiceNumber;
 
-    public String getPaymentSource() {
-        return paymentSource;
-    }
+    @JsonProperty("source")
+    private Map<String, String> source; // Peut contenir "reference" et "url"
 
-    public void setPaymentSource(String paymentSource) {
-        this.paymentSource = paymentSource;
-    }
+    @JsonProperty("offer")
+    private Map<String, String> offer; // Peut contenir "external_id"
 
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
-    }
+    public Invoice() {}
 
-    public void setPaymentDate(LocalDateTime paymentDate) {
-        this.paymentDate = paymentDate;
-    }
+    // Getters et Setters
+    public Client getClient() { return client; }
+    public void setClient(Client client) { this.client = client; }
 
-    public Long getIntegrationPaymentId() {
-        return integrationPaymentId;
-    }
+    public ContactInfo getContactInfo() { return contactInfo; }
+    public void setContactInfo(ContactInfo contactInfo) { this.contactInfo = contactInfo; }
 
-    public void setIntegrationPaymentId(Long integrationPaymentId) {
-        this.integrationPaymentId = integrationPaymentId;
-    }
+    public LocalDate getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
 
-    public String getIntegrationType() {
-        return integrationType;
-    }
+    public String getSentAt() { return sentAt; }
+    public void setSentAt(String sentAt) { this.sentAt = sentAt; }
 
-    public void setIntegrationType(String integrationType) {
-        this.integrationType = integrationType;
-    }
+    public String getDueAt() { return dueAt; }
+    public void setDueAt(String dueAt) { this.dueAt = dueAt; }
 
-    public Long getInvoiceId() {
-        return invoiceId;
-    }
+    public String getAmountDue() { return amountDue; }
+    public void setAmountDue(String amountDue) { this.amountDue = amountDue; }
 
-    public void setInvoiceId(Long invoiceId) {
-        this.invoiceId = invoiceId;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public String getInvoiceNumber() { return invoiceNumber; }
+    public void setInvoiceNumber(String invoiceNumber) { this.invoiceNumber = invoiceNumber; }
+
+    public Map<String, String> getSource() { return source; }
+    public void setSource(Map<String, String> source) { this.source = source; }
+
+    public Map<String, String> getOffer() { return offer; }
+    public void setOffer(Map<String, String> offer) { this.offer = offer; }
 }
