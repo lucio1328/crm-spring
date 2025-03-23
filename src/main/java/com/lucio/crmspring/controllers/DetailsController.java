@@ -1,12 +1,15 @@
 package com.lucio.crmspring.controllers;
 
 import com.lucio.crmspring.services.DetailsService;
+import com.lucio.crmspring.services.PaiementService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -15,10 +18,13 @@ import java.util.List;
 @RequestMapping("/details")
 public class DetailsController {
     private final DetailsService detailsService;
+    private final PaiementService paiementService;
 
-    public DetailsController(DetailsService detailsService) {
+    public DetailsController(DetailsService detailsService, PaiementService paiementService) {
         this.detailsService = detailsService;
+        this.paiementService = paiementService;
     }
+
 
     private Mono<ModelAndView> handleDetailRequest(String token, String attributeName, Mono<? extends List<?>> data, Model model, String viewName) {
         return data.map(list -> {
@@ -74,5 +80,28 @@ public class DetailsController {
         String token = (String) session.getAttribute("token");
         if (token == null) return Mono.just(new ModelAndView("redirect:/"));
         return handleDetailRequest(token, "paiements", detailsService.getPaiements(token), model, "pages/details_paiements");
+    }
+
+    @GetMapping("/paiement/update/{id}")
+    public ModelAndView update(@PathVariable("id") int id) {
+        return new ModelAndView();
+    }
+    @GetMapping("/paiement/delete/{id}")
+    public Mono<String> delete(@PathVariable("id") int id, HttpSession session, RedirectAttributes redirectAttributes) {
+        String token = (String) session.getAttribute("token");
+
+        if (token == null) {
+            return Mono.just("redirect:/");
+        }
+
+        return paiementService.deletePaiement(token, id)
+                .map(response -> {
+                    redirectAttributes.addFlashAttribute("message", "Paiement supprimé avec succès !");
+                    return "redirect:/details/paiements";
+                })
+                .onErrorResume(e -> {
+                    redirectAttributes.addFlashAttribute("error", "Erreur lors de la suppression du paiement.");
+                    return Mono.just("redirect:/details/paiements");
+                });
     }
 }
