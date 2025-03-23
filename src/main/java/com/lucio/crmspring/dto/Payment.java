@@ -1,20 +1,48 @@
 package com.lucio.crmspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties(ignoreUnknown = true) // Ignore les champs non définis dans la classe
 public class Payment {
+
     private Long id;
+
+    @JsonProperty("external_id")
     private String externalId;
+
     private Double amount;
+
     private String description;
+
+    @JsonProperty("payment_source")
     private String paymentSource;
+
+    @JsonProperty("payment_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
     private LocalDateTime paymentDate;
+
+    @JsonProperty("integration_payment_id")
     private Long integrationPaymentId;
+
+    @JsonProperty("integration_type")
     private String integrationType;
+
+    @JsonProperty("invoice_id")
     private Long invoiceId;
+
+    @JsonProperty("created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
     private LocalDateTime createdAt;
+
+    @JsonProperty("updated_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
     private LocalDateTime updatedAt;
 
+    // Getters et Setters
     public Long getId() {
         return id;
     }
@@ -85,5 +113,21 @@ public class Payment {
 
     public void setInvoiceId(Long invoiceId) {
         this.invoiceId = invoiceId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
