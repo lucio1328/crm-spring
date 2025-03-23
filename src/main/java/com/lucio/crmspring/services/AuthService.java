@@ -22,4 +22,12 @@ public class AuthService {
                 .retrieve()
                 .bodyToMono(LoginResponse.class);
     }
+
+    public Mono<Void> logout(String token) {
+        return webClient.post()
+                .uri("/logout")
+                .header("Authorization", "Bearer " + token)
+                .retrieve()
+                .bodyToMono(Void.class);
+    }
 }

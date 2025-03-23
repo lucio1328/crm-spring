@@ -17,17 +17,11 @@
 
 <!-- Header -->
 <div class="header">
-    <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+    <a th:href="@{/auth/logout}"><button class="logout-btn">🚪 Deconnexion</button></a>
 </div>
 
 <div class="content">
     <div th:include="${view}"></div>
 </div>
-
-<script>
-    function logout() {
-        window.location.href = "/logout";
-    }
-</script>
 </body>
 </html>

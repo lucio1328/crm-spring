@@ -1,11 +1,146 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard CRM</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h3>📊 Tableau de bord</h3>
-    <p>Bienvenue sur le tableau de bord !</p>
+<div class="container">
+    <h2>📊 Dashboard CRM</h2>
+    <p th:if="${error}" th:text="${error}" class="error-message"></p>
+    <br/>
+
+    <!-- Totaux -->
+    <div class="totals">
+        <div class="card">👥 Clients:
+            <span id="totalClients" th:text="${statistiques?.getClients() ?: 'N/A'}"></span>
+            <div class="card-footer">Liste Clients <i>➡️</i></div>
+        </div>
+        <div class="card">📂 Projets:
+            <span id="totalProjets" th:text="${statistiques?.getProjets() ?: 'N/A'}"></span>
+            <div class="card-footer">Liste Clients <i>➡️</i></div>
+        </div>
+        <div class="card">✅ Tâches:
+            <span id="totalTaches" th:text="${statistiques?.getTaches() ?: 'N/A'}"></span>
+            <div class="card-footer">Liste Clients <i>➡️</i></div>
+        </div>
+        <div class="card">📜 Offres:
+            <span id="totalOffres" th:text="${statistiques?.getOffres() ?: 'N/A'}"></span>
+            <div class="card-footer">Liste Clients <i>➡️</i></div>
+        </div>
+        <div class="card">💰 Factures:
+            <span id="totalFactures" th:text="${statistiques?.getFactures() ?: 'N/A'}"></span>
+            <div class="card-footer">Liste Clients <i>➡️</i></div>
+        </div>
+        <div class="card">💳 Paiements:
+            <span id="totalPaiements" th:text="${statistiques?.getPaiements() ?: 'N/A'}"></span>
+            <div class="card-footer">Liste Clients <i>➡️</i></div>
+        </div>
+    </div>
+    <br/>
+
+    <!-- Graphiques -->
+    <div class="charts-container">
+        <div class="chart-box">
+            <canvas id="chartClientsProjets"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="chartFacturesPaiements"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="chartFacturesEvolution"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="chartOffresAccepteesRefusees"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const data = {
+            clients: parseInt(document.getElementById("totalClients").innerText) || 0,
+            projets: parseInt(document.getElementById("totalProjets").innerText) || 0,
+            taches: parseInt(document.getElementById("totalTaches").innerText) || 0,
+            offres: parseInt(document.getElementById("totalOffres").innerText) || 0,
+            factures: parseInt(document.getElementById("totalFactures").innerText) || 0,
+            paiements: parseInt(document.getElementById("totalPaiements").innerText) || 0
+        };
+
+        // Graphique 1 : Clients vs Projets vs Tâches
+        new Chart(document.getElementById("chartClientsProjets").getContext("2d"), {
+            type: "bar",
+            data: {
+                labels: ["Clients", "Projets", "Tâches"],
+                datasets: [{
+                    label: "Comparaison Clients / Projets / Tâches",
+                    data: [data.clients, data.projets, data.taches],
+                    backgroundColor: ["#007bff", "#28a745", "#dc2d50"]
+                }]
+            }
+        });
+
+        // Graphique 2 : Factures vs Paiements
+        new Chart(document.getElementById("chartFacturesPaiements").getContext("2d"), {
+            type: "pie",
+            data: {
+                labels: ["Factures", "Paiements"],
+                datasets: [{
+                    data: [data.factures, data.paiements],
+                    backgroundColor: ["#ffcc00", "#ff4444"]
+                }]
+            }
+        });
+
+        // Graphique 3 : Évolution des factures et paiements
+        new Chart(document.getElementById("chartFacturesEvolution").getContext("2d"), {
+            type: "line",
+            data: {
+                labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"],
+                datasets: [
+                    {
+                        label: "Factures",
+                        data: [10, 20, 30, 25, 40, 50],
+                        borderColor: "#ffcc00",
+                        fill: false
+                    },
+                    {
+                        label: "Paiements",
+                        data: [5, 15, 25, 20, 35, 45],
+                        borderColor: "#ff4444",
+                        fill: false
+                    }
+                ]
+            }
+        });
+
+        // Graphique 4 : Offres acceptées vs refusées
+        new Chart(document.getElementById("chartOffresAccepteesRefusees").getContext("2d"), {
+            type: "line",
+            data: {
+                labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"],
+                datasets: [
+                    {
+                        label: "Offres acceptées",
+                        data: [3, 5, 8, 12, 15, 20],
+                        borderColor: "#17a2b8",
+                        fill: false
+                    },
+                    {
+                        label: "Offres refusées",
+                        data: [7, 10, 15, 10, 5, 3],
+                        borderColor: "#6610f2",
+                        fill: false
+                    }
+                ]
+            }
+        });
+
+    });
+</script>
 </body>
 </html>
