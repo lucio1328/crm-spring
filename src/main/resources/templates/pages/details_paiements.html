@@ -10,6 +10,36 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+  <style>
+    .btn-action {
+      padding: 5px 10px;
+      margin: 2px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-edit {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-delete:hover {
+      background-color: #a71d2a;
+    }
+  </style>
 </head>
 <body>
 
@@ -24,14 +54,19 @@
     <th>Source du paiement</th>
     <th>Montant</th>
     <th>Description</th>
+    <th>Actions</th> <!-- Nouvelle colonne pour les actions -->
   </tr>
   </thead>
   <tbody>
   <tr th:each="payment : ${paiements}">
     <td th:text="${#temporals.format(payment.getPaymentDate(), 'dd/MM/yyyy HH:mm')}"></td>
     <td th:text="${payment.getPaymentSource()}"></td>
-    <td th:text="${payment.getAmount() / 100}"></td>
+    <td th:text="${payment.getAmount() / 100} + ' €'"></td>
     <td th:text="${payment.getDescription()}"></td>
+    <td>
+      <a th:href="@{/paiement/edit/{id}(id=${payment.getId()})}" class="btn-action btn-edit">Modifier</a>
+      <button class="btn-action btn-delete" th:attr="data-id=${payment.getId()}" onclick="confirmDelete(this)">Supprimer</button>
+    </td>
   </tr>
   </tbody>
 </table>
@@ -46,6 +81,22 @@
       "pageLength": 10
     });
   });
+
+  function confirmDelete(button) {
+    let paymentId = button.getAttribute("data-id");
+    if (confirm("Voulez-vous vraiment supprimer ce paiement ?")) {
+      fetch(`/paiement/delete/${paymentId}`, {
+        method: "DELETE"
+      }).then(response => {
+        if (response.ok) {
+          alert("Paiement supprimé avec succès !");
+          location.reload(); // Recharger la page après suppression
+        } else {
+          alert("Erreur lors de la suppression.");
+        }
+      }).catch(error => console.error("Erreur:", error));
+    }
+  }
 </script>
 
 </body>
