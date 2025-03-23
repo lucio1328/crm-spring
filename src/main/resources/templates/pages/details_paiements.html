@@ -67,10 +67,13 @@
   <tr th:each="payment : ${paiements}">
     <td th:text="${#temporals.format(payment.getPaymentDate(), 'dd/MM/yyyy HH:mm')}"></td>
     <td th:text="${payment.getPaymentSource()}"></td>
-    <td th:text="${payment.getAmount() / 100}"></td>
+    <td th:text="${payment.getAmount()}"></td>
     <td th:text="${payment.getDescription()}"></td>
     <td>
-      <a th:href="@{/details/paiement/update/{id}(id=${payment.getId()})}" class="btn-action btn-edit">Modifier</a>
+      <a href="#" class="btn-action btn-edit"
+         th:attr="onclick=|openModal('${payment.id}', '${#temporals.format(payment.paymentDate, 'dd/MM/yyyy HH:mm')}', '${payment.paymentSource}', '${payment.amount}', '${payment.description}')|">
+        Modifier
+      </a>
       <a th:href="@{/details/paiement/delete/{id}(id=${payment.getId()})}" class="btn-action btn-delete"
          onclick="return confirm('Voulez-vous vraiment supprimer ce paiement ?');">
         Supprimer
@@ -79,6 +82,25 @@
   </tr>
   </tbody>
 </table>
+
+<div id="updateModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0px 0px 10px #000;">
+  <h3>Modifier le paiement</h3>
+  <form id="updateForm" method="post" th:action="@{/details/paiement/update}">
+    <input type="hidden" id="paymentId" name="id">
+
+    <label>Source :</label>
+    <input type="text" id="paymentSource" name="paymentSource" disabled><br><br>
+
+    <label>Montant :</label>
+    <input type="number" id="paymentAmount" name="amount" required><br><br>
+
+    <label>Description :</label>
+    <input type="text" id="paymentDescription" name="description" disabled><br><br>
+
+    <button type="submit">Sauvegarder</button>
+    <button type="button" onclick="closeModal()">Annuler</button>
+  </form>
+</div>
 
 <script>
   $(document).ready(function () {
@@ -90,6 +112,19 @@
       "pageLength": 10
     });
   });
+
+  function openModal(id, date, source, amount, description) {
+    document.getElementById("paymentId").value = id;
+    document.getElementById("paymentSource").value = source;
+    document.getElementById("paymentAmount").value = amount;
+    document.getElementById("paymentDescription").value = description;
+
+    document.getElementById("updateModal").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("updateModal").style.display = "none";
+  }
 
 </script>
 

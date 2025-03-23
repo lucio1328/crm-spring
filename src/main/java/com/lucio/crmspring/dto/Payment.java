@@ -60,7 +60,7 @@ public class Payment {
     }
 
     public Double getAmount() {
-        return amount;
+        return amount / 100;
     }
 
     public void setAmount(Double amount) {

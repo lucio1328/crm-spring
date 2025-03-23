@@ -5,9 +5,7 @@ import com.lucio.crmspring.services.PaiementService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import reactor.core.publisher.Mono;
@@ -82,9 +80,23 @@ public class DetailsController {
         return handleDetailRequest(token, "paiements", detailsService.getPaiements(token), model, "pages/details_paiements");
     }
 
-    @GetMapping("/paiement/update/{id}")
-    public ModelAndView update(@PathVariable("id") int id) {
-        return new ModelAndView();
+    @PostMapping("/paiement/update")
+    public Mono<String> update(@RequestParam("id") String id, @RequestParam("amount") String amount, HttpSession session, RedirectAttributes redirectAttributes) {
+        String token = (String) session.getAttribute("token");
+
+        if (token == null) {
+            return Mono.just("redirect:/");
+        }
+
+        return paiementService.updatePaiement(token, Integer.parseInt(id), Double.parseDouble(amount))
+                .map(response -> {
+                    redirectAttributes.addFlashAttribute("message", "Paiement mis à jour avec succès !");
+                    return "redirect:/details/paiements";
+                })
+                .onErrorResume(e -> {
+                    redirectAttributes.addFlashAttribute("error", "Le montant du paiement "+Double.parseDouble(amount)+" depasse le solde restant a payer.");
+                    return Mono.just("redirect:/details/paiements");
+                });
     }
     @GetMapping("/paiement/delete/{id}")
     public Mono<String> delete(@PathVariable("id") int id, HttpSession session, RedirectAttributes redirectAttributes) {
