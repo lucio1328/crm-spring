@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Page</title>
+    <link rel="stylesheet" th:href="@{/css/modele.css}">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>CRM</h2>
+    <ul>
+        <li><a th:href="@{/dashboard}">📊 Dashboard</a></li>
+        <li><a th:href="@{/configuration}">⚙️ Configuration (Remise)</a></li>
+    </ul>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <a th:href="@{/auth/logout}"><button class="logout-btn">🚪 Deconnexion</button></a>
+</div>
+
+<div class="content">
+    <div th:include="${view}"></div>
+</div>
+</body>
+</html>
