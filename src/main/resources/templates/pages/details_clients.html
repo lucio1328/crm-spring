@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails des Clients</title>
+  <link rel="stylesheet" th:href="@{/css/details.css}">
+</head>
+<body>
+
+<a href="/dashboard" class="btn">⬅ Retour au Dashboard</a>
+
+<h2>Liste des Clients</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Company</th>
+    <th>VAT</th>
+    <th>Address</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="client : ${clients}">
+    <td th:text="${client.getCompanyName()}"></td>
+    <td th:text="${client.getVat()}"></td>
+    <td th:text="${client.getAddress()}"></td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

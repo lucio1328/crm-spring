@@ -18,30 +18,33 @@
     <div class="totals">
         <div class="card">👥 Clients:
             <span id="totalClients" th:text="${statistiques?.getClients() ?: 'N/A'}"></span>
-            <div class="card-footer">Liste Clients <i>➡️</i></div>
+            <a th:href="@{/details/clients}" class="card-footer">Voir détails <i>➡️</i></a>
         </div>
         <div class="card">📂 Projets:
             <span id="totalProjets" th:text="${statistiques?.getProjets() ?: 'N/A'}"></span>
-            <div class="card-footer">Liste Clients <i>➡️</i></div>
+            <a th:href="@{/details/projets}" class="card-footer">Voir détails <i>➡️</i></a>
         </div>
         <div class="card">✅ Tâches:
             <span id="totalTaches" th:text="${statistiques?.getTaches() ?: 'N/A'}"></span>
-            <div class="card-footer">Liste Clients <i>➡️</i></div>
+            <a th:href="@{/details/taches}" class="card-footer">Voir détails <i>➡️</i></a>
         </div>
         <div class="card">📜 Offres:
             <span id="totalOffres" th:text="${statistiques?.getOffres() ?: 'N/A'}"></span>
-            <div class="card-footer">Liste Clients <i>➡️</i></div>
+            <a th:href="@{/details/offres}" class="card-footer">Voir détails <i>➡️</i></a>
         </div>
         <div class="card">💰 Factures:
             <span id="totalFactures" th:text="${statistiques?.getFactures() ?: 'N/A'}"></span>
-            <div class="card-footer">Liste Clients <i>➡️</i></div>
+            <a th:href="@{/details/factures}" class="card-footer">Voir détails <i>➡️</i></a>
         </div>
         <div class="card">💳 Paiements:
             <span id="totalPaiements" th:text="${statistiques?.getPaiements() ?: 'N/A'}"></span>
-            <div class="card-footer">Liste Clients <i>➡️</i></div>
+            <a th:href="@{/details/paiements}" class="card-footer">Voir détails <i>➡️</i></a>
         </div>
     </div>
     <br/>
+    <!-- Ajout de l'attribut data-revenus -->
+<!--    <div id="revenusData" th:data-revenus='${statistiques.getRevenusMensuels()}'></div>-->
+<!--    <p th:text="${statistiques.revenusMensuels}"></p>-->
 
     <!-- Graphiques -->
     <div class="charts-container">
@@ -56,6 +59,9 @@
         </div>
         <div class="chart-box">
             <canvas id="chartOffresAccepteesRefusees"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="chartRevenuMensuel"></canvas>
         </div>
     </div>
 </div>
@@ -139,6 +145,35 @@
                 ]
             }
         });
+
+        // Récupération des revenus mensuels via l'attribut data-revenus
+        // const revenusDataElement = document.getElementById("revenusData");
+        // const revenusData = JSON.parse(revenusDataElement.getAttribute("data-revenus") || "[]");
+        //
+        // // Vérification et transformation des données
+        // if (revenusData.length > 0) {
+        //     const labelsRevenus = revenusData.map(item => `${item.annee}-${String(item.mois).padStart(2, '0')}`);
+        //     const dataRevenus = revenusData.map(item => item.total);
+        //
+        //     // Graphique 5 : Évolution du revenu mensuel
+        //     new Chart(document.getElementById("chartRevenuMensuel").getContext("2d"), {
+        //         type: "line",
+        //         data: {
+        //             labels: labelsRevenus,
+        //             datasets: [
+        //                 {
+        //                     label: "Revenu mensuel (€)",
+        //                     data: dataRevenus,
+        //                     borderColor: "#2ecc71",
+        //                     backgroundColor: "rgba(46, 204, 113, 0.2)",
+        //                     fill: true
+        //                 }
+        //             ]
+        //         }
+        //     });
+        // } else {
+        //     console.warn("Aucune donnée de revenu mensuel trouvée.");
+        // }
 
     });
 </script>
