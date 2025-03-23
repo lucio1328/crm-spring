@@ -36,6 +36,7 @@ public class DetailsService {
                 .retrieve()
                 .bodyToFlux(Project.class)
                 .collectList();
+//                .doOnNext(projects -> System.out.println("Projets récupérés : " + projects));
     }
 
     public Mono<List<Task>> getTaches(String token) {

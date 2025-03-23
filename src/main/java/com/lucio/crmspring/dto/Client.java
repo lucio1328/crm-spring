@@ -1,22 +1,42 @@
 package com.lucio.crmspring.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class Client {
     private Long id;
+
+    @JsonProperty("external_id")
     private String externalId;
+
     private String address;
     private String zipcode;
     private String city;
-    private String company_name;
+
+    @JsonProperty("company_name") // ✅ Assure que "company_name" JSON est mappé correctement
+    private String companyName;
+
     private String vat;
+
+    @JsonProperty("company_type") // Si besoin
     private String companyType;
+
+    @JsonProperty("client_number") // Si besoin
     private String clientNumber;
+
+    @JsonProperty("user_id")
     private Long userId;
+
+    @JsonProperty("industry_id")
     private Long industryId;
+
+    @JsonProperty("created_at")
     private LocalDateTime createdAt;
+
+    @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
 
+    // Getters et Setters
     public Long getId() {
         return id;
     }
@@ -58,11 +78,11 @@ public class Client {
     }
 
     public String getCompanyName() {
-        return company_name;
+        return companyName;
     }
 
     public void setCompanyName(String companyName) {
-        this.company_name = companyName;
+        this.companyName = companyName;
     }
 
     public String getVat() {
@@ -103,5 +123,21 @@ public class Client {
 
     public void setIndustryId(Long industryId) {
         this.industryId = industryId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

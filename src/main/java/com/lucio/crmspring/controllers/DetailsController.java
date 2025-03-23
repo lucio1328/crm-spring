@@ -22,10 +22,12 @@ public class DetailsController {
 
     private Mono<ModelAndView> handleDetailRequest(String token, String attributeName, Mono<? extends List<?>> data, Model model, String viewName) {
         return data.map(list -> {
+            System.out.println("Données envoyées à Thymeleaf pour " + attributeName + ": " + list);
             model.addAttribute(attributeName, list);
             model.addAttribute("view", viewName);
             return new ModelAndView("layout/modele");
         }).onErrorResume(e -> {
+            System.err.println("Erreur lors de la récupération des " + attributeName + ": " + e.getMessage());
             model.addAttribute("error", "Impossible de récupérer les données.");
             model.addAttribute("view", viewName);
             return Mono.just(new ModelAndView("layout/modele"));
