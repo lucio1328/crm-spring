@@ -1,71 +1,59 @@
 package com.lucio.crmspring.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Task {
-    private Long id;
+    @JsonProperty("external_id")
     private String externalId;
-    private LocalDateTime sentAt;
-    private String sourceType;
-    private Long sourceId;
-    private Long clientId;
-    private String status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Long getId() {
-        return id;
-    }
+    private String title;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @JsonProperty("client")
+    private String clientName;
 
-    public String getExternalId() {
-        return externalId;
-    }
+    @JsonProperty("user")
+    private String assigneeName;
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
-    }
+    private Status status;
 
-    public LocalDateTime getSentAt() {
-        return sentAt;
-    }
+    private LocalDate deadline;
 
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
-    }
+    @JsonProperty("created_at")
+    private LocalDate createdAt;
 
-    public String getSourceType() {
-        return sourceType;
-    }
+    // Getters & Setters
+    public String getExternalId() { return externalId; }
+    public void setExternalId(String externalId) { this.externalId = externalId; }
 
-    public void setSourceType(String sourceType) {
-        this.sourceType = sourceType;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public Long getSourceId() {
-        return sourceId;
-    }
+    public String getClientName() { return clientName; }
+    public void setClientName(String clientName) { this.clientName = clientName; }
 
-    public void setSourceId(Long sourceId) {
-        this.sourceId = sourceId;
-    }
+    public String getAssigneeName() { return assigneeName; }
+    public void setAssigneeName(String assigneeName) { this.assigneeName = assigneeName; }
 
-    public Long getClientId() {
-        return clientId;
-    }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
-    }
+    public LocalDate getDeadline() { return deadline; }
+    public void setDeadline(LocalDate deadline) { this.deadline = deadline; }
 
-    public String getStatus() {
-        return status;
-    }
+    public LocalDate getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
 
-    public void setStatus(String status) {
-        this.status = status;
+    @Override
+    public String toString() {
+        return "Task{" +
+                "externalId='" + externalId + '\'' +
+                ", title='" + title + '\'' +
+                ", client=" +  clientName + '\'' +
+                ", assignee=" + assigneeName +'\'' +
+                ", status=" + (status != null ? status.getTitle() : "null") +
+                ", deadline=" + deadline +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }
