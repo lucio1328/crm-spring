@@ -17,7 +17,6 @@ public class ConfigurationService {
     public Mono<String> insertConfiguration(String token, Double remiseGlobale) {
         return webClient.post()
                 .uri("/configuration")
-                .header("Authorization", "Bearer " + token)
                 .bodyValue(Map.of("remise_globale", remiseGlobale))
                 .retrieve()
                 .bodyToMono(String.class);
