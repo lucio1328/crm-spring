@@ -55,13 +55,17 @@
             <canvas id="chartFacturesPaiements"></canvas>
         </div>
         <div class="chart-box">
+            <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">Revenu mensuel</h2>
+            <h3 class="text-2xl font-semibold text-gray-700 text-center mb-4">12 dernier mois</h3>
+            <canvas id="monthlyRevenueChart"></canvas>
+            <div id="monthlyRevenueError">
+            </div>
+        </div>
+        <div class="chart-box">
             <canvas id="chartFacturesEvolution"></canvas>
         </div>
         <div class="chart-box">
             <canvas id="chartOffresAccepteesRefusees"></canvas>
-        </div>
-        <div class="chart-box">
-            <canvas id="chartRevenuMensuel"></canvas>
         </div>
     </div>
 </div>
@@ -101,6 +105,62 @@
                 }]
             }
         });
+
+        async function fetchMonthlyRevenueData() {
+            try {
+                const url = 'http://localhost:8080/api/payments/chart';
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des données');
+                }
+
+                const revenueData = await response.json();
+                displayMonthlyRevenueChart(revenueData);
+                document.getElementById('monthlyRevenueError').classList.add('hidden');
+            } catch (error) {
+                console.error(error);
+                document.getElementById('monthlyRevenueError').classList.remove('hidden');
+            }
+        }
+
+        function displayMonthlyRevenueChart(revenueData) {
+            const monthlyRevenueChart = document.getElementById('monthlyRevenueChart').getContext('2d');
+
+            new Chart(monthlyRevenueChart, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(revenueData),
+                    datasets: [{
+                        label: 'Monthly Revenue ($)',
+                        data: Object.values(revenueData),
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.3)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
 
         // Graphique 3 : Évolution des factures et paiements
         new Chart(document.getElementById("chartFacturesEvolution").getContext("2d"), {
@@ -146,35 +206,7 @@
             }
         });
 
-        // Récupération des revenus mensuels via l'attribut data-revenus
-        // const revenusDataElement = document.getElementById("revenusData");
-        // const revenusData = JSON.parse(revenusDataElement.getAttribute("data-revenus") || "[]");
-        //
-        // // Vérification et transformation des données
-        // if (revenusData.length > 0) {
-        //     const labelsRevenus = revenusData.map(item => `${item.annee}-${String(item.mois).padStart(2, '0')}`);
-        //     const dataRevenus = revenusData.map(item => item.total);
-        //
-        //     // Graphique 5 : Évolution du revenu mensuel
-        //     new Chart(document.getElementById("chartRevenuMensuel").getContext("2d"), {
-        //         type: "line",
-        //         data: {
-        //             labels: labelsRevenus,
-        //             datasets: [
-        //                 {
-        //                     label: "Revenu mensuel (€)",
-        //                     data: dataRevenus,
-        //                     borderColor: "#2ecc71",
-        //                     backgroundColor: "rgba(46, 204, 113, 0.2)",
-        //                     fill: true
-        //                 }
-        //             ]
-        //         }
-        //     });
-        // } else {
-        //     console.warn("Aucune donnée de revenu mensuel trouvée.");
-        // }
-
+        fetchMonthlyRevenueData();
     });
 </script>
 </body>
