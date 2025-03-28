@@ -22,7 +22,7 @@
         <th>Contact</th>
         <th>Date de création</th>
         <th>Date d'envoi</th>
-        <th>Échéance</th>
+        <th>Total</th>
         <th>Montant dû</th>
         <th>Statut</th>
         <th>N° Facture</th>
@@ -35,7 +35,7 @@
         <td th:text="${invoice.getContactInfo().getName() + ' (' + invoice.getContactInfo().getEmail() + ')'}"></td>
         <td th:text="${#temporals.format(invoice.getCreatedAt(), 'dd/MM/yyyy')}"></td>
         <td th:text="${invoice.getSentAt()}"></td>
-        <td th:text="${invoice.getDueAt()} ?: ''"></td>
+        <td th:text="${invoice.getTotal()} ?: ''"></td>
         <td th:text="${invoice.getAmountDue()}"></td>
         <td>
         <span th:text="${invoice.getStatus()}"
