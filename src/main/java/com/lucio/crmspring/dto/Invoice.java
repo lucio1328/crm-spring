@@ -32,6 +32,9 @@ public class Invoice {
     @JsonProperty("amount_due")
     private String amountDue;
 
+    @JsonProperty("total")
+    private String total;
+
     @JsonProperty("status")
     private String status;
 
@@ -64,6 +67,13 @@ public class Invoice {
 
     public String getAmountDue() { return amountDue; }
     public void setAmountDue(String amountDue) { this.amountDue = amountDue; }
+
+    public String getTotal() {
+        return total;
+    }
+    public void setTotal(String total) {
+        this.total = total;
+    }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
