@@ -34,6 +34,12 @@
         </div>
         <div class="card">💰 Factures:
             <span id="totalFactures" th:text="${statistiques?.getFactures() ?: 'N/A'}"></span>
+            <br/>
+            Total :
+            <span th:if="${statistiques?.getSommeInvoice() != null}"
+                  th:text="${#numbers.formatDecimal(statistiques.getSommeInvoice(), 1, 'POINT', 2, 'COMMA')} + ' €'">
+            </span>
+            <span th:unless="${statistiques?.getSommeInvoice() != null}">N/A</span>
             <a th:href="@{/details/factures}" class="card-footer">Voir détails <i>➡️</i></a>
         </div>
         <div class="card">💳 Paiements:

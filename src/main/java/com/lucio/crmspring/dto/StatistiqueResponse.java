@@ -11,6 +11,16 @@ public class StatistiqueResponse {
     private int paiements = 0;
     private List<RevenuMensuel> revenus_mensuels;
 
+    private Double sommeInvoice = 0.0;
+
+    public Double getSommeInvoice() {
+        return sommeInvoice;
+    }
+
+    public void setSommeInvoice(Double sommeInvoice) {
+        this.sommeInvoice = sommeInvoice;
+    }
+
     public int getClients() {
         return clients;
     }
